@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Mail\Mailer;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\Recovers\Recover as RecoverTrait;
-use Validator;
 
 class MailController extends Controller
 {

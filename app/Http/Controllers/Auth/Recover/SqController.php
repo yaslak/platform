@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Recover;
 use App\Http\Requests\Recover\sq;
 use App\Http\Controllers\Controller;
 use App\Model\Recover\Question_secrete;
-use App\Model\Recover\Recover;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class SqController extends Controller
 {
@@ -29,14 +27,9 @@ class SqController extends Controller
         $question = Question_secrete::find($request->question);
         if($question){
             Auth::user()->recover()->update(['response'=>$request->response,'question_secrete_id'=>$request->question]);
+            Session()->flash('success','Votre validation est terminer');
             return redirect('/');
         }
-        Session()->flash('success','Votre validation est terminer');
         return back()->withErrors(['question'=>'veuillez choisir une question'])->withInput();
-    }
-
-    public function update(sq $request)
-    {
-
     }
 }
