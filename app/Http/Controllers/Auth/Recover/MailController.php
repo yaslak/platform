@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Recover;
+namespace App\Http\Controllers\Auth\Recover;
 
 use App\Http\Requests\Recover\Mail;
 use App\Http\Controllers\Controller;
