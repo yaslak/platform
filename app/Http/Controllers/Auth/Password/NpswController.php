@@ -45,6 +45,7 @@ class NpswController extends Controller
                     $current_password = $this->current_password($recover);
                     $this->insertOldPassword($current_password,$recover->id,$old_password);
                     $this->new_password($request->password,$recover);
+                    $this->delete_update_password($update_password,$recover->id);
                     Session()->flash('success','votre mot passe est modifier');
                     return redirect()->route('home');
                 }
@@ -118,5 +119,10 @@ class NpswController extends Controller
         return $user->update([
             'password'=>bcrypt($password)
         ]);
+    }
+
+    private function delete_update_password($update_password, $id)
+    {
+        $update_password->where('recover_id',$id)->first()->delete();
     }
 }

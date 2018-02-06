@@ -33,7 +33,7 @@ class MailController extends Controller
     {
         $recover = $this->Recover($update_password,$token);
         if($recover){
-            //$this->mail($update_password,$token,$mailer);
+            $this->mail($update_password,$token,$mailer);
             return view('auth.passwords.email',compact('token'));
         }
         return view('auth.passwords.expiredToken');
