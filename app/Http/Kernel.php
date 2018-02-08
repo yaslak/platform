@@ -60,5 +60,6 @@ class Kernel extends HttpKernel
         'recover.mail' => \App\Http\Middleware\Recover\RecoverMail::class,
         'recover.sq' => \App\Http\Middleware\Recover\RecoverSq::class,
         'recover.password' => \App\Http\Middleware\Recover\PasswordRecovering::class,
+        'recovered' => \App\Http\Middleware\Recover\Recovered::class,
     ];
 }

@@ -21,13 +21,13 @@
                         <div class="col-12">
                             <input id="auth"
                                    type="text"
-                                   class="form-control bg-secondary text-light {{ $errors->has('email') ? 'border-danger' : 'border-warning' }}"
+                                   class="form-control bg-secondary text-light {{ $errors->has('name') ? 'border-danger' : 'border-warning' }}"
                                    name="name"
-                                   value="{{ old('email') }}" required>
+                                   value="{{ old('name') }}" required>
 
-                            @if ($errors->has('email'))
+                            @if ($errors->has('name'))
                                 <span class="form-text text-danger">
-                                    <em>{{ $errors->first('email') }}</em>
+                                    <em>{{ $errors->first('name') }}</em>
                                 </span>
                             @endif
                         </div>

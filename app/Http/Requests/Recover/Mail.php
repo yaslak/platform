@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Recover;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
 class Mail extends FormRequest
 {
