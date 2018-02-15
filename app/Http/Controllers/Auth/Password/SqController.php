@@ -42,7 +42,7 @@ class SqController extends Controller
             $this->SqCreate($recover->id,$update_password);
             return redirect()->route('reset.mail.show',$token);
         }
-        return back()->withErrors('success','la reponse est movaise')->withInput();
+        return back()->withErrors(['response'=>'Votre réponse ne correspond pas a nos enregistrement, Merci de verifier'])->withInput();
     }
 
     private function response($id,$recover,$response)

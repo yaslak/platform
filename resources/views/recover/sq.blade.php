@@ -1,14 +1,14 @@
 @extends('layouts.app')
 @section('content')
-    <div class="card border-warning">
+    <div class="card border-warning col-md-8 offset-md-2">
         <div class="card-header border-warning">
-            <h6 class="text-warning">Questions Secrète</h6>
+            <h6 class="text-warning">Questions Secrètes :</h6>
         </div>
         <div class="card-body">
             {!! Form::open(['method'=>'post','class'=>'form-horizontal']) !!}
             <div class="form-group">
-                {{ Form::label('question','Choix Question') }}
-                <select name="question" class="form-control">
+                {{ Form::label('question','Choix la Question qui vous convient :') }}
+                <select name="question" class="form-control bg-secondary text-primary {{$errors->has('response') ? 'border-danger':'border-warning'}}">
                     <option value=""></option>
                     @foreach($questions as $question)
                         <option value="{{$question->id}}">{{$question->question}}</option>
@@ -21,8 +21,8 @@
                 @endif
             </div>
             <div class="form-group">
-                {{ Form::label('response','response') }}
-                {{ Form::text('response', null,['id'=> 'response','class'=>'form-control']) }}
+                {{ Form::label('response','Votre Réponse :') }}
+                <input type="text" id="response" name="response" value="{{old('response')}}" class="form-control bg-secondary text-warning {{$errors->has('response') ? 'border-danger':'border-warning'}}" autofocus required>
             </div>
             <div class="form-group">
                 @if($errors->has('response'))
@@ -30,10 +30,22 @@
                 @endif
             </div>
             <div class="form-group">
+                @if($errors)
+                    @foreach($errors as $er)
+                    <span class="text-danger">{{$er}}</span>
+                    @endforeach
+                @endif
+            </div>
+            <div class="form-group">
                 {{ Form::submit('envoyer',['class'=>'btn btn-outline-warning float-right']) }}
             </div>
             {!! Form::close() !!}
 
+        </div>
+        <div class="card-footer">
+            <em class="text-secondary">
+                veuillez indiquez la réponse qui vous conviez, il sera obligatoire en cas de pert de votre mot de passe.
+            </em>
         </div>
     </div>
 @stop

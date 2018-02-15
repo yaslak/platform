@@ -12,10 +12,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/layouts.css') }}" rel="stylesheet">
 </head>
 <body style="padding-top: 40px;">
-    @include('layouts.navbar')
-
+    @include('layouts.top')
+    @include('layouts.left')
+    @include('layouts.right')
+    @include('layouts.bottom')
     <div class="container-fluid" style="padding-top: 40px;">
         @yield('content')
         @include('layouts.flash')

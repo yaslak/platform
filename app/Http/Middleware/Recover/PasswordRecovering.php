@@ -15,7 +15,6 @@ class PasswordRecovering
 
     public function __construct(update_password $update_password)
     {
-
         $this->update_password = $update_password;
     }
     /**

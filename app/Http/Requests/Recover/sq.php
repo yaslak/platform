@@ -25,7 +25,7 @@ class sq extends FormRequest
     {
         return [
             'question' => 'required|int',
-            'response' => 'required|min:4|string',
+            'response' => 'required|min:4',
         ];
     }
 }
