@@ -7,15 +7,18 @@ use App\Http\Requests\Auth\Password\TargetRequest;
 use App\Model\Auth\Password\update_password;
 use App\Model\Recover\Recover;
 use App\User;
+use Carbon\Carbon;
 
 class TargetController extends Controller
 {
     /**
      * show form target membre
+     * @param update_password $update_password
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(update_password $update_password)
     {
+        $this->clearUpdatePassword($update_password);
         return view('auth.passwords.target');
     }
 
@@ -39,7 +42,7 @@ class TargetController extends Controller
             return view('auth.passwords.invalideRecover');
         }
         return back()
-            ->withErrors('target','ce compte n\'existe pas')
+            ->withErrors(['target'=>'ce compte n\'existe pas'])
             ->withInput();
     }
 
@@ -130,8 +133,14 @@ class TargetController extends Controller
 
     private function update_password($update_password, $recover_id)
     {
-        $id = $update_password->select('token')->where('recover_id',$recover_id)->first();
-       return $id  ? $id->token: $this->createToken($update_password,$recover_id);
+        $id = $update_password->select('token','code')->where('recover_id',$recover_id)->first();
+        if($id){
+            if($id->code){
+                return $id->token;
+            }
+        }
+        $this->deleteToken($update_password,$recover_id);
+        return $this->createToken($update_password,$recover_id);
     }
 
     /**
@@ -147,8 +156,23 @@ class TargetController extends Controller
         $update_password->insert([
             'recover_id' => $recover_id,
             'token' => $token,
-            'code'=>$code
+            'code'=>$code,
+            'created_at' => Carbon::now()
         ]);
         return $token;
+    }
+
+    private function clearUpdatePassword($update_password)
+    {
+        $time = Carbon::now()->addMinutes(3);
+        $expired = $update_password->where('created_at','>',$time)->first();
+        if($expired){
+            $expired->delete();
+        }
+    }
+
+    private function deleteToken($update_password, $recover_id)
+    {
+        $update_password->where('recover_id',$recover_id)->first()->delete();
     }
 }

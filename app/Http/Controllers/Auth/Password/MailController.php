@@ -9,6 +9,7 @@ use App\Traits\Password\TargetTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Mail\Mailer;
+use Illuminate\Support\Facades\Session;
 
 class MailController extends Controller
 {
@@ -33,8 +34,13 @@ class MailController extends Controller
     {
         $recover = $this->Recover($update_password,$token);
         if($recover){
-            $this->mail($update_password,$token,$mailer);
-            return view('auth.passwords.email',compact('token'));
+            $valide = $this->valideMail($update_password,$token);
+            if($valide){
+                //$this->mail($update_password,$token,$mailer);
+                return view('auth.passwords.email',compact('token'));
+            }
+            Session()->flash('success','veuillez ressayer a nouveau');
+            return redirect()->route('reset.target.show');
         }
         return view('auth.passwords.expiredToken');
     }
@@ -53,7 +59,6 @@ class MailController extends Controller
         $email = $user->email;
         $name = $user->name;
         $mailer->to($email)->send(new PasswordMail($name,$code));
-
     }
 
     /**
@@ -69,9 +74,15 @@ class MailController extends Controller
     {
         $recover = $this->Recover($update_password,$token);
         if($recover){
-            $code = $this->code($update_password,$token,$request->code);
-            if($code){
-                return redirect()->route('reset.npsw.show',compact('token'));
+            $isset = $this->issetCode($update_password,$token);
+            if(!$isset){
+                $code = $this->code($update_password,$token,$request->code);
+                if($code){
+                    return redirect()->route('reset.npsw.show',compact('token'));
+                }
+                else{
+                    return back()->withErrors(['code'=>'le code que vous indiquez est erroné'])->withInput();
+                }
             }
             return view('auth.passwords.expiredToken');
         }
@@ -82,6 +93,21 @@ class MailController extends Controller
     {
         return $update_password->where([['token',$token],['code',$code]])
             ->update(['code'=>false]);
+    }
+
+    private function valideMail($update_password, $token)
+    {
+        $update = $update_password->where('token',$token)->first();
+        if(!$update->code){
+            $update->delete();
+            return false;
+        }
+        return true;
+    }
+
+    private function issetCode($update_password, $token)
+    {
+        return $update_password->where([['token',$token],['code',0]])->first();
     }
 
 

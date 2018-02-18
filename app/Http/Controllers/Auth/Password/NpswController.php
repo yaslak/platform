@@ -49,7 +49,7 @@ class NpswController extends Controller
                     Session()->flash('success','votre mot passe est modifier');
                     return redirect()->route('home');
                 }
-                return back()->withErrors(['password'=>'existe deja'])->withInput();
+                return back()->withErrors(['password'=>'ce mot de passe a été déjà modifier'])->withInput(['password']);
             }
         }
         return view('auth.passwords.expiredToken');

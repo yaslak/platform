@@ -28,8 +28,9 @@ class SqController extends Controller
         if($question){
             Auth::user()->recover()->update(['response'=>$request->response,'question_secrete_id'=>$request->question]);
             Session()->flash('success','Votre validation est terminer');
-            return redirect('/');
+            return redirect()->route('home');
         }
         return back()->withErrors(['question'=>'veuillez choisir une question'])->withInput();
+
     }
 }
