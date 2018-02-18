@@ -1,13 +1,13 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark fixed-top">
     <!-- Brand NAV -->
-    <a class="navbar-brand tex" href="{{ url('/') }}">
+    <a class="navbar-brand text-secondary" href="{{ url('/') }}">
         LY
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler"
             aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse offset-sm-7 offset-md-8 offset-lg-9" id="navbarToggler"    >
+    <div class="collapse navbar-collapse offset-sm-7 offset-md-8 offset-lg-9" id="navbarToggler">
         <ul class="navbar-nav mt-0">
             @guest
             <li class="nav-item">

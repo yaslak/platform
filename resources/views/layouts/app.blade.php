@@ -16,11 +16,8 @@
 </head>
 <body style="padding-top: 40px;">
     @include('layouts.top')
-    @include('layouts.left')
-    @include('layouts.right')
-    @include('layouts.bottom')
     <div class="container-fluid" style="padding-top: 40px;">
-        @yield('content')
+         @yield('content')
         @include('layouts.flash')
     </div>
 
